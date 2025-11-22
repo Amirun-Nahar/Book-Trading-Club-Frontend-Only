@@ -49,10 +49,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (currentUser) {
         try {
-          const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+          const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/+$/, ''); // Remove trailing slashes
           const res = await fetch(
             `${apiUrl}/api/users/${currentUser.uid}`
           );
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
           const data: DBUser = await res.json(); // 👈 parse JSON
           setDBUser(data); // 👈 set DB user
         } catch (err) {

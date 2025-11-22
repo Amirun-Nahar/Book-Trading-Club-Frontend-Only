@@ -2,8 +2,14 @@ import axios from 'axios';
 import notify from '@/lib/notify';
 
 
+// Remove trailing slashes from baseURL to prevent double slashes
+const getBaseURL = () => {
+  const url = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  return url.replace(/\/+$/, ''); // Remove all trailing slashes
+};
+
 const axiosSecure = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001',
+  baseURL: getBaseURL(),
   timeout: 30000, // Increased timeout to 30 seconds
   headers: { 'X-Custom-Header': 'foobar' },
 });
