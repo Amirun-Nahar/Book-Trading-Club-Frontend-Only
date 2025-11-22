@@ -15,8 +15,11 @@ import AroundMe from '@/pages/Map/AroundMe';
 import { createBrowserRouter } from 'react-router';
 import ErrorPage from '@/pages/ErrorPage/ErrorPage';
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import Preorder from '@/pages/Preorder/Preorder';
+import MyPreorders from '@/pages/Preorder/MyPreorders';
 
 import Users from '@/pages/Dashboards/Admin/Users';
+import AdminDashboard from '@/pages/Dashboards/Admin/AdminDashboard';
 import UserProfile from '@/pages/Dashboards/Shared/UserProfile';
 import DashboardHomePage from '@/pages/Dashboards/User/DashboardHomePage';
 import MyBooks from '@/pages/Dashboards/Shared/MyBooks';
@@ -87,6 +90,18 @@ const router = createBrowserRouter([
         path: '/around-me',
         Component: AroundMe,
       },
+      {
+        path: '/preorder',
+        Component: Preorder,
+      },
+      {
+        path: '/preorder/:id',
+        Component: Preorder,
+      },
+      {
+        path: '/preorders',
+        Component: MyPreorders,
+      },
     ],
   },
   {
@@ -100,6 +115,10 @@ const router = createBrowserRouter([
       {
         path: 'users',
         Component: Users,
+      },
+      {
+        path: 'admin-dashboard',
+        Component: AdminDashboard,
       },
       {
         path: 'chat',

@@ -5,10 +5,16 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import AdminDashboard from '@/pages/Dashboards/Admin/AdminDashboard';
 
 const DashboardHomePage = () => {
   const { dbUser } = useAuth();
   const navigate = useNavigate();
+
+  // Show Admin Dashboard for admins
+  if (dbUser?.role === 'admin') {
+    return <AdminDashboard />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 py-10 bg-background text-foreground">

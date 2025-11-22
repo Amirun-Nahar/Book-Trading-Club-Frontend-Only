@@ -1,10 +1,13 @@
 // src/pages/Browse.tsx
 import { useMemo, useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import UseAxiosSecure from '@/axios/UseAxiosSecure.js';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import BookCard from '@/pages/Browse/BookCard';
 import { FiSearch } from 'react-icons/fi';
+import { ShoppingCart } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import notify from '@/lib/notify';
 
 type Book = {
   id: string;
@@ -56,6 +59,8 @@ const normalize = (b: ApiBook): Book => ({
 
 export default function Browse() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useFavorites();
   const rawQuery = (searchParams.get('query') || '').trim().toLowerCase();
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
@@ -143,6 +148,15 @@ export default function Browse() {
     sortOrder,
   ]);
 
+  const handlePreorderClick = () => {
+    if (!isAuthenticated) {
+      notify.error('Please log in to preorder books');
+      navigate('/login');
+      return;
+    }
+    navigate('/preorder');
+  };
+
   if (isLoading || isFetching) {
     return (
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -184,10 +198,20 @@ export default function Browse() {
 
       {/* Search + Filters */}
       <div className="rounded-2xl bg-white p-6 md:p-8 shadow-subtle border border-sand-200 mb-6">
-        <h3 className="text-lg font-semibold flex items-center gap-2 text-soil-900 mb-5">
-          <FiSearch className="w-5 h-5 text-leaf-600" />
-          Search & Filter
-        </h3>
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="text-lg font-semibold flex items-center gap-2 text-soil-900">
+            <FiSearch className="w-5 h-5 text-leaf-600" />
+            Search & Filter
+          </h3>
+          <button
+            onClick={handlePreorderClick}
+            className="flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-leaf-600 hover:bg-leaf-700 rounded-lg transition-colors shadow-sm"
+            aria-label="Preorder a book"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            Preorder Book
+          </button>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <input

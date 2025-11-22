@@ -28,6 +28,7 @@ import {
   GitPullRequest,
   X,
   MessageCircle,
+  ShieldCheck,
 } from 'lucide-react';
 
 import { Link } from 'react-router';
@@ -124,6 +125,22 @@ const AdminSidebar = () => {
                   <Link to={'/dashboard/mybooks'}>
                     <BookType />
                     See My Listings
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        {/* Admin Group */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Admin</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link to={'/dashboard/admin-dashboard'}>
+                    <ShieldCheck />
+                    Admin Dashboard
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

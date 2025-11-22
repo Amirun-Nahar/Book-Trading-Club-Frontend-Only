@@ -22,6 +22,18 @@ const Users = () => {
   });
 
   const HandleMakeUser = async (user: any) => {
+    const ADMIN_EMAIL = 'naharamina68@gmail.com';
+    
+    // Prevent removing admin from authorized email
+    if (user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Access Denied',
+        text: 'Cannot remove admin role from authorized admin account',
+      });
+      return;
+    }
+
     try {
       const payload = { role: 'user' };
       const response = await axiossecure.put(
@@ -36,17 +48,29 @@ const Users = () => {
         text: 'The user role has been changed to User.',
         icon: 'success',
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `Something went wrong!.. ${error}`,
+        text: error?.response?.data?.message || `Something went wrong!.. ${error}`,
       });
     }
   };
 
   const HandleMakeAdmin = async (user: any) => {
+    const ADMIN_EMAIL = 'naharamina68@gmail.com';
+    
+    // Prevent making others admin
+    if (user?.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Access Denied',
+        text: 'Only naharamina68@gmail.com can be assigned admin role',
+      });
+      return;
+    }
+
     try {
       const result = await Swal.fire({
         title: 'Are you sure?',
@@ -72,12 +96,12 @@ const Users = () => {
           icon: 'success',
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `Something went wrong!.. ${error}`,
+        text: error?.response?.data?.message || `Something went wrong!.. ${error}`,
       });
     }
   };
@@ -140,7 +164,7 @@ const Users = () => {
                 <td className="px-6 py-4 text-center">{user?.role}</td>
                 <td className="px-6 py-4 text-center">{user?.uid}</td>
                 <td className="px-6 py-4 text-center">
-                  {user?.role === 'user' && (
+                  {user?.role === 'user' && user?.email?.toLowerCase() === 'naharamina68@gmail.com' && (
                     <button
                       onClick={() => HandleMakeAdmin(user)}
                       className="p-2 bg-blue-400 text-sm lg:text-base hover:bg-blue-600 transition-all duration-300 text-black rounded-lg"
@@ -148,13 +172,16 @@ const Users = () => {
                       Make Admin
                     </button>
                   )}
-                  {user?.role === 'admin' && (
+                  {user?.role === 'admin' && user?.email?.toLowerCase() !== 'naharamina68@gmail.com' && (
                     <button
                       onClick={() => HandleMakeUser(user)}
                       className="p-2 bg-green-600 text-sm lg:text-base hover:bg-green-800 transition-all duration-300 text-black rounded-lg"
                     >
                       Make User
                     </button>
+                  )}
+                  {user?.role === 'admin' && user?.email?.toLowerCase() === 'naharamina68@gmail.com' && (
+                    <span className="text-xs text-gray-500 italic">Authorized Admin</span>
                   )}
                 </td>
               </tr>
