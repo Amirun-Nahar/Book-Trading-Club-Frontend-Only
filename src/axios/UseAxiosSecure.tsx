@@ -3,7 +3,7 @@ import notify from '@/lib/notify';
 
 
 const axiosSecure = axios.create({
-  baseURL: 'https://book-trading-club-backend-wine.vercel.app/',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001',
   timeout: 30000, // Increased timeout to 30 seconds
   headers: { 'X-Custom-Header': 'foobar' },
 });

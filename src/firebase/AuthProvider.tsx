@@ -49,8 +49,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (currentUser) {
         try {
+          const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
           const res = await fetch(
-            `https://book-trading-club-backend.vercel.app/api/users/${currentUser.uid}`
+            `${apiUrl}/api/users/${currentUser.uid}`
           );
           const data: DBUser = await res.json(); // 👈 parse JSON
           setDBUser(data); // 👈 set DB user
