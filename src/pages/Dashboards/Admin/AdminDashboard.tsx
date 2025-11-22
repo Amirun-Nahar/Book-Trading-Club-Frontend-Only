@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/firebase/AuthProvider';
 import UseAxiosSecure from '@/axios/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { Users, UserCheck, UserX, Mail, Calendar, Search, Filter, Eye, Edit, Trash2, Shield, ShieldCheck } from 'lucide-react';
+import { Users, UserCheck, UserX, Mail, Calendar, Search, Filter, Eye, Trash2, Shield, ShieldCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,6 @@ export default function AdminDashboard() {
   const axiosSecure = UseAxiosSecure();
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const {
     data: users = [],
@@ -153,7 +152,6 @@ export default function AdminDashboard() {
   };
 
   const handleViewUserDetails = (user: User) => {
-    setSelectedUser(user);
     Swal.fire({
       title: `<strong>${user.displayName}</strong>`,
       html: `

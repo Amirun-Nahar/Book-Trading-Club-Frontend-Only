@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/firebase/useAuth';
-import { preorderApi, type Preorder } from '@/services/preorderApi';
+import { preorderApi } from '@/services/preorderApi';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import notify from '@/lib/notify';
 import Loader2 from '@/components/Loaders/Loader2';
@@ -227,7 +227,7 @@ export default function MyPreorders() {
               <div className="flex gap-2 pt-4 border-t border-sand-200">
                 {preorder.bookId?._id && (
                   <button
-                    onClick={() => navigate(`/book/${preorder.bookId._id}`)}
+                    onClick={() => navigate(`/book/${preorder.bookId!._id}`)}
                     className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                   >
                     <Eye className="w-4 h-4" />

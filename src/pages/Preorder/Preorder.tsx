@@ -4,7 +4,7 @@ import { useAuth } from '@/firebase/useAuth';
 import { preorderApi, type CreatePreorderRequest } from '@/services/preorderApi';
 import notify from '@/lib/notify';
 import Loader2 from '@/components/Loaders/Loader2';
-import { ArrowLeft, BookOpen, User, Mail, Phone, MapPin, MessageSquare, IdCard, Building2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, User, Mail, Phone, MapPin, MessageSquare, IdCard } from 'lucide-react';
 
 export default function Preorder() {
   const { id } = useParams<{ id: string }>();
